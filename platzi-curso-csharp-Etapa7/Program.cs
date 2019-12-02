@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CoreEscuela.App;
 using CoreEscuela.Entidades;
 using CoreEscuela.Util;
 using static System.Console;
@@ -11,28 +12,43 @@ namespace CoreEscuela
     {
         static void Main(string[] args)
         {
-            AppDomain.CurrentDomain.ProcessExit += AccionDelEvento;
-            AppDomain.CurrentDomain.ProcessExit += (o, s) => Printer.Beep(2000, 1000, 1);
+            // AppDomain.CurrentDomain.ProcessExit += AccionDelEvento;
+            // AppDomain.CurrentDomain.ProcessExit += (o, s) => Printer.Beep(2000, 1000, 1);
 
             var engine = new EscuelaEngine();
             engine.Inicializar();
             Printer.WriteTitle("BIENVENIDOS A LA ESCUELA");
-            //Printer.Beep(10000, cantidad: 10);
-            //ImpimirCursosEscuela(engine.Escuela);
-            Dictionary<int, string> dicccionario = new Dictionary<int, string>();
 
-            dicccionario.Add(10, "JuanK");
+            var reporteador = new Reporteador(engine.GetDiccionarioObjetos());
+            // var evalList = reporteador.GetListaEvalucion();
+            // var asigList = reporteador.GetListaAsignaturas();
+            var listaEval = reporteador.GetDicEvaluacionAsign();
 
-            dicccionario.Add(23, "Lorem Ipsum");
-
-            foreach (var keyValPair in dicccionario)
+            foreach (var asig in listaEval)
             {
-                WriteLine($"Key: {keyValPair.Key} Valor: {keyValPair.Value}");
+                Console.WriteLine(asig.Key);
+
+                foreach (var notaStu in asig.Value)
+                {
+                    Console.WriteLine($"   {notaStu}");
+                }
             }
+            // //Printer.Beep(10000, cantidad: 10);
+            // //ImpimirCursosEscuela(engine.Escuela);
+            // Dictionary<int, string> dicccionario = new Dictionary<int, string>();
 
-            var dictmp = engine.GetDiccionarioObjetos();
+            // dicccionario.Add(10, "JuanK");
 
-            engine.ImprimirDiccionario(dictmp, true);
+            // dicccionario.Add(23, "Lorem Ipsum");
+
+            // foreach (var keyValPair in dicccionario)
+            // {
+            //     WriteLine($"Key: {keyValPair.Key} Valor: {keyValPair.Value}");
+            // }
+
+            // var dictmp = engine.GetDiccionarioObjetos();
+
+            // engine.ImprimirDiccionario(dictmp, true);
 
         }
 

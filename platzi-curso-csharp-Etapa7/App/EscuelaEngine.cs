@@ -4,7 +4,7 @@ using System.Linq;
 using CoreEscuela.Entidades;
 using CoreEscuela.Util;
 
-namespace CoreEscuela
+namespace CoreEscuela.App
 {
     public sealed class EscuelaEngine
     {
@@ -38,7 +38,7 @@ namespace CoreEscuela
                 {
                     switch (objdic.Key)
                     {
-                        case LlaveDiccionario.Evaluación:
+                        case LlaveDiccionario.Evaluacion:
                             if (imprEval)
                                 Console.WriteLine(val);
                             break;
@@ -50,7 +50,7 @@ namespace CoreEscuela
                             break;
                         case LlaveDiccionario.Curso:
                             var curtmp = val as Curso;
-                            if(curtmp != null)
+                            if (curtmp != null)
                             {
                                 int count = curtmp.Alumnos.Count;
                                 Console.WriteLine("Curso: " + val.Nombre + " Cantidad Alumnos: " + count);
@@ -64,6 +64,7 @@ namespace CoreEscuela
             }
         }
 
+        
         public Dictionary<LlaveDiccionario, IEnumerable<ObjetoEscuelaBase>> GetDiccionarioObjetos()
         {
             var diccionario = new Dictionary<LlaveDiccionario, IEnumerable<ObjetoEscuelaBase>>();
@@ -71,7 +72,7 @@ namespace CoreEscuela
             diccionario.Add(LlaveDiccionario.Escuela, new[] { Escuela });
             diccionario.Add(LlaveDiccionario.Curso, Escuela.Cursos.Cast<ObjetoEscuelaBase>());
 
-            var listatmp = new List<Evaluación>();
+            var listatmp = new List<Evaluacion>();
             var listatmpas = new List<Asignatura>();
             var listatmpal = new List<Alumno>();
 
@@ -86,7 +87,7 @@ namespace CoreEscuela
                 }
 
             }
-            diccionario.Add(LlaveDiccionario.Evaluación,
+            diccionario.Add(LlaveDiccionario.Evaluacion,
                                     listatmp.Cast<ObjetoEscuelaBase>());
             diccionario.Add(LlaveDiccionario.Asignatura,
                                     listatmpas.Cast<ObjetoEscuelaBase>());
@@ -201,13 +202,13 @@ namespace CoreEscuela
                     {
                         for (int i = 0; i < 5; i++)
                         {
-                            var ev = new Evaluación
+                            var ev = new Evaluacion
                             {
                                 Asignatura = asignatura,
                                 Nombre = $"{asignatura.Nombre} Ev#{i + 1}",
                                 Nota = MathF.Round(
                                     5 * (float)rnd.NextDouble()
-                                    ,2),
+                                    , 2),
                                 Alumno = alumno
                             };
                             alumno.Evaluaciones.Add(ev);
@@ -226,7 +227,7 @@ namespace CoreEscuela
             {
                 var listaAsignaturas = new List<Asignatura>(){
                             new Asignatura{Nombre="Matemáticas"} ,
-                            new Asignatura{Nombre="Educación Física"},
+                            new Asignatura{Nombre="Educacion Física"},
                             new Asignatura{Nombre="Castellano"},
                             new Asignatura{Nombre="Ciencias Naturales"}
                 };
