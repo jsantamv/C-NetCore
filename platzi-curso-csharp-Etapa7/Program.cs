@@ -20,35 +20,46 @@ namespace CoreEscuela
             Printer.WriteTitle("BIENVENIDOS A LA ESCUELA");
 
             var reporteador = new Reporteador(engine.GetDiccionarioObjetos());
-            // var evalList = reporteador.GetListaEvalucion();
-            // var asigList = reporteador.GetListaAsignaturas();
+            var evalList = reporteador.GetListaEvalucion();
+            var asigList = reporteador.GetListaAsignaturas();
             var listaEval = reporteador.GetDicEvaluacionAsign();
+            var ListaPromexAsig = reporteador.GetPromedioAlumnoAsig();
 
-            foreach (var asig in listaEval)
+            Printer.WriteTitle("Captura de una evaluacion por consola");
+            var newEval = new Evaluacion();
+            string nombre, notastrig;
+            float nota;
+
+            WriteLine("Ingrese el Nombre de la evalucion");
+            Printer.PresioneEnter();
+            nombre = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(nombre))
             {
-                Console.WriteLine(asig.Key);
-
-                foreach (var notaStu in asig.Value)
-                {
-                    Console.WriteLine($"   {notaStu}");
-                }
+                throw new ArgumentException($"El valor del {nameof(nombre)} no puede ser vacio");
             }
-            // //Printer.Beep(10000, cantidad: 10);
-            // //ImpimirCursosEscuela(engine.Escuela);
-            // Dictionary<int, string> dicccionario = new Dictionary<int, string>();
+            else
+            {
+                newEval.Nombre = nombre.ToLower();
+                WriteLine("El nombre de la evaluacion ha sido ingresado");
+            }
 
-            // dicccionario.Add(10, "JuanK");
+            /*////////////////////////////////////////////*/
+            WriteLine("Ingrese La NOTA de la evalucion");
+            Printer.PresioneEnter();
+            notastrig = Console.ReadLine();
 
-            // dicccionario.Add(23, "Lorem Ipsum");
+            if (string.IsNullOrEmpty(notastrig))
+            {
+                throw new ArgumentException($"El valor del {nameof(notastrig)} no puede ser vacio");
+            }
+            else
+            {
+                newEval.Nota = float.Parse(notastrig);
+                WriteLine("La nota de la evaluacion ha sido ingresado");
 
-            // foreach (var keyValPair in dicccionario)
-            // {
-            //     WriteLine($"Key: {keyValPair.Key} Valor: {keyValPair.Value}");
-            // }
+            }
 
-            // var dictmp = engine.GetDiccionarioObjetos();
-
-            // engine.ImprimirDiccionario(dictmp, true);
 
         }
 

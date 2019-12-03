@@ -65,18 +65,27 @@ namespace CoreEscuela.App
         public Dictionary<string, IEnumerable<object>> GetPromedioAlumnoAsig()
         {
             var rta = new Dictionary<string, IEnumerable<object>>();
+            var dicEvalAsig = GetDicEvaluacionAsign();
 
-            // var dicEvalAsig = GetDicEvaluacionAsign();
-
-            // foreach (var asig in dicEvalAsig)
-            // {
-            //     var eval = from eval in asig.Value
-            //                 select new {eval.Alumno.UniqueId,}
-            // }
+            foreach (var asig in dicEvalAsig)
+            {
+                var promedioAlumnos = from eval in asig.Value
+                                      group eval by new 
+                                      {
+                                          eval.Alumno.UniqueId,
+                                          eval.Alumno.Nombre
+                                      }
+                            into grupoEvalAlumno
+                                      select new AlumnoPromedio
+                                      {
+                                          AlumnoId = grupoEvalAlumno.Key.UniqueId,
+                                          Alumno = grupoEvalAlumno.Key.Nombre,
+                                          Promedio = grupoEvalAlumno.Average(evaluacion => evaluacion.Nota)
+                                      };
+                rta.Add(asig.Key, promedioAlumnos);
+            }
 
             return rta;
         }
-
-
     }
 }
