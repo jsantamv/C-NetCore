@@ -55,12 +55,29 @@ namespace CoreEscuela
             }
             else
             {
-                newEval.Nota = float.Parse(notastrig);
-                WriteLine("La nota de la evaluacion ha sido ingresado");
-
+                try
+                {
+                    newEval.Nota = float.Parse(notastrig);
+                    if (newEval.Nota < 0 || newEval.Nota > 5)
+                    {
+                        throw new ArgumentOutOfRangeException("La nota debe de estar entre 0 y 5");
+                    }
+                    WriteLine("La nota de la evaluacion ha sido ingresado");
+                }
+                catch (ArgumentOutOfRangeException ex)
+                {
+                    Printer.WriteTitle(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Printer.WriteTitle($"{ex.Message} El Valor de la nota no es un numero valido");
+                }
+                finally
+                {
+                    Printer.ExitProgram();
+                    Printer.Beep(2500,500,3);
+                }
             }
-
-
         }
 
         private static void AccionDelEvento(object sender, EventArgs e)
